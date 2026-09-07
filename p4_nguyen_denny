@@ -1,0 +1,46 @@
+import math
+import matplotlib.pyplot as plt
+
+def plot_function(fun_str, domain, ns):
+    """Plotting functions given as a string, domain, and with ns."""
+    xmin, xmax = domain
+    xs = []
+    ys = []
+
+    # spacing between sample points
+    step = (xmax - xmin) / (ns - 1)
+
+    # create sample points
+    for i in range(ns):
+        x = xmin + i * step
+        xs.append(x)
+        # Evaluate fun_str using variable x
+        y = eval(fun_str)
+        ys.append(y)
+
+    print(" x\t\t y")
+    print("-" * 20)
+    for x, y in zip(xs, ys):
+        print(f"{x:.4f}\t {y:.4f}")
+
+    # graph of functions
+    plt.plot(xs, ys, label=fun_str)
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.title("Function Visualization")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+
+def main():
+    fun_str = input("input function with variable x: ")
+    xmin = float(input("input xmin: "))
+    xmax = float(input("input xmax: "))
+    ns = int(input("input a number of samples: "))
+
+    plot_function(fun_str, (xmin, xmax), ns)
+
+
+if __name__ == "__main__":
+    main()
