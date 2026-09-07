@@ -1,0 +1,38 @@
+import math #for quadratic formula
+import matplotlib.pyplot as plt #plotting graphs
+import numpy as np
+
+while True:
+    a_str = input("Enter a (press ENTER to end loop): ")
+    if a_str == "":
+        break
+    a = float(a_str)
+    b = float(input("Enter b: "))
+    c = float(input("Enter c: "))
+
+    D = b**2 - 4*a*c #discriminant
+
+    if D < 0:
+        print("no real solutions")
+        x_opt = -b / (2*a)
+        x_vals = np.linspace(x_opt - 3, x_opt + 3, 150)
+    elif D == 0:
+        x1 = -b / (2*a)
+        print(f"one solution: {x1:.5f}")
+        x_vals = np.linspace(x1 - 3, x1 + 3, 150)
+    else:
+        sqrt_D = math.sqrt(D)
+        x1 = (-b - sqrt_D) / (2*a)
+        x2 = (-b + sqrt_D) / (2*a)
+        print(f"two solutions: x1={x1:.5f} x2={x2:.5f}")
+        left = min(x1, x2) - 3
+        right = max(x1, x2) + 3
+        x_vals = np.linspace(left, right, 150)
+
+    y_vals = a * x_vals**2 + b * x_vals + c
+    plt.plot(x_vals, y_vals, 'b-')
+    plt.title("Quadratic Function Graph")
+    plt.xlabel("x")
+    plt.ylabel("y")
+    plt.grid(True)
+    plt.show()
