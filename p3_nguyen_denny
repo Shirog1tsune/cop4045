@@ -1,30 +1,35 @@
-def find_Pythagorean(n): 
-    """list of every Pythagorean triples (a, b, c) and return a list of tuples (a, b, c)
-    with 0 < a, b, c <= n and a^2 + b^2 = c^2.
+#question 3 part A
+def find_dup_str(s, n):
     """
-    triples = []
-    for a in range(1, n + 1):
-        for b in range(1, n + 1):
-            for c in range(1, n + 1):
-                if a * a + b * b == c * c:
-                    triples.append((a, b, c))
-    return triples
+    The first duplicated substring of length n in s will be returned,
+    """
+    length = len(s)
 
-def main():
-    n_str = input("input a positive integer n: ")
-    try:
-        n = int(n_str)
-        if n <= 0:
-            print("n has to be a positive integer.")
-            return
-    except ValueError:
-        print("Error! only positive integer. Try again")
-        return
+    # If index is longer than the string itself, no duplicates can exist
+    if n <= 0 or n > length:
+        return ""
 
-    triples = find_Pythagorean(n)
-    print(f"Pythagorean triples where 0 < a, b, c <= {n}:")
-    for triple in triples:
-        print(triple)
+    # Test all starting position i for the first substring
+    for i in range(length - n + 1):
+        sub = s[i:i+n]
 
-if __name__ == "__main__":
-    main()
+
+        for j in range(i + n, length - n + 1):  # j begins at i+n to avoid overlapping substrings
+            if s[j:j+n] == sub:
+                return sub
+
+    return ""
+
+#question 3 part B
+def find_max_dup(s):
+    """Return the longest duplicated substring in s."""
+    length = len(s)
+    for n in range(length, 0, -1):
+        dup = find_dup_str(s, n)
+        if dup != "":
+            return dup
+    return ""
+
+s = input("Enter a string: ")
+result = find_max_dup(s)
+print("Longest duplicated substring:", result)
