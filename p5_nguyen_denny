@@ -1,0 +1,80 @@
+import string
+import matplotlib.pyplot as plt
+
+def caesar_cipher(text, shift):
+    """Encrypt text using Caesar cipher with given shift.
+    Preserves spaces and casing.
+    """
+    result = []
+    for ch in text:
+        if ch.isalpha():
+            base = ord('A') if ch.isupper() else ord('a')
+            result.append(chr((ord(ch) - base + shift) % 26 + base))
+        else:
+            result.append(ch)
+    return ''.join(result)
+
+
+def caesar_decipher(ciphertext, shift):
+    """Decrypt Caesar cipher text with given shift."""
+    return caesar_cipher(ciphertext, -shift)
+
+
+def letter_frequency(text):
+    """Count frequency of each letter in text (case-insensitive)."""
+    freq = {ch: 0 for ch in string.ascii_lowercase}
+    for ch in text.lower():
+        if ch in freq:
+            freq[ch] += 1
+    return freq
+
+
+def plot_frequency(freq):
+    """Plot letter frequency using matplotlib."""
+    letters = list(freq.keys())
+    counts = list(freq.values())
+    plt.bar(letters, counts)
+    plt.xlabel("Letters")
+    plt.ylabel("Frequency")
+    plt.title("Letter Frequency")
+    plt.show()
+
+
+def main():
+    while True:
+        print("\n--- Caesar Cipher Menu ---")
+        print("1. Encrypt text")
+        print("2. Decrypt text")
+        print("3. Analyze letter frequency")
+        print("4. Quit")
+
+        choice = input("Enter choice: ")
+
+        if choice == "1":
+            text = input("Enter text to encrypt: ")
+            shift = int(input("Enter shift value: "))
+            ciphered = caesar_cipher(text, shift)
+            print("Encrypted text:", ciphered)
+
+        elif choice == "2":
+            text = input("Enter text to decrypt: ")
+            shift = int(input("Enter shift value: "))
+            clear = caesar_decipher(text, shift)
+            print("Decrypted text:", clear)
+
+        elif choice == "3":
+            text = input("Enter text for frequency analysis: ")
+            freq = letter_frequency(text)
+            print("Letter frequencies:", freq)
+            plot_frequency(freq)
+
+        elif choice == "4":
+            print("Goodbye!")
+            break
+
+        else:
+            print("Invalid choice. Try again.")
+
+
+if __name__ == "__main__":
+    main()
