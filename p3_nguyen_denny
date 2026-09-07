@@ -1,0 +1,30 @@
+def find_Pythagorean(n): 
+    """list of every Pythagorean triples (a, b, c) and return a list of tuples (a, b, c)
+    with 0 < a, b, c <= n and a^2 + b^2 = c^2.
+    """
+    triples = []
+    for a in range(1, n + 1):
+        for b in range(1, n + 1):
+            for c in range(1, n + 1):
+                if a * a + b * b == c * c:
+                    triples.append((a, b, c))
+    return triples
+
+def main():
+    n_str = input("input a positive integer n: ")
+    try:
+        n = int(n_str)
+        if n <= 0:
+            print("n has to be a positive integer.")
+            return
+    except ValueError:
+        print("Error! only positive integer. Try again")
+        return
+
+    triples = find_Pythagorean(n)
+    print(f"Pythagorean triples where 0 < a, b, c <= {n}:")
+    for triple in triples:
+        print(triple)
+
+if __name__ == "__main__":
+    main()
